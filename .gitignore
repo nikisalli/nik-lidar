@@ -4,3 +4,4 @@
 !.vscode/launch.json
 !.vscode/extensions.json
 build
+src/myconf.h

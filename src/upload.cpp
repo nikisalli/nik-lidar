@@ -6,21 +6,13 @@
 #include <ArduinoOTA.h>
 
 /* fill your ssid and password here */
-const char* ssid = "ssid";
-const char* password = "pass";
+const char* ssid = "Vodafone-A48216342";
+const char* password = "12344321";
+const char* hostname = "esp32";
 
 TaskHandle_t Task1;
 
 void Task1code( void * parameter) {
-    Serial.begin(115200);
-
-    WiFi.mode(WIFI_STA);
-    WiFi.begin(ssid, password);
-    while (WiFi.status() != WL_CONNECTED) {
-        delay(500);
-        Serial.print(".");
-    }
-    
     ArduinoOTA.setPort(3232);
     ArduinoOTA.setHostname("esp32");
     ArduinoOTA.setPassword("iotsharing");
@@ -47,7 +39,7 @@ void Task1code( void * parameter) {
     
     for (;;) {
         ArduinoOTA.handle();
-        vTaskDelay(pdMS_TO_TICKS(10));
+        vTaskDelay(pdMS_TO_TICKS(100));
     }
 }
 

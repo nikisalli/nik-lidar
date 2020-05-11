@@ -2,8 +2,8 @@
 #include <WiFi.h>
 #include <PCF8574.h>
 #include <YDLidar.h>
-#include "/home/nik/Desktop/progetti/nik-lidar/src/QueueList.h"
-#include "/home/nik/Desktop/progetti/nik-lidar/src/buffer.h"
+#include "/home/nik/Desktop/progetti/nik-lidar/src/QueueList.h" //needs full path because .ino files are sh!t
+#include "/home/nik/Desktop/progetti/nik-lidar/src/buffer.h"  //needs full path because .ino files are sh!t
 
 #define STEP1 32
 #define DIR1 33
@@ -22,8 +22,8 @@ YDLidar lidar;
 QueueList<scanPoint> scans;
 buffer<uint8_t> buf(BUF_SIZE);
 
-const char* ssid = "Vodafone-A48216342";
-const char* password = "12344321";
+const char* ssid = "wifi";
+const char* password = "pass";
 const char* hostname = "esp32";
 
 bool isScanning = false;   

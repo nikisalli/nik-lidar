@@ -1,9 +1,10 @@
 //#include "upload.h"
+#include "queue_list.h" //needs full path because .ino files are sh!t
+#include "lidar_buffer.h"  //needs full path because .ino files are sh!t
+#include "config.h"
 #include <WiFi.h>
 #include <PCF8574.h>
 #include <YDLidar.h>
-#include "/home/nik/Desktop/progetti/nik-lidar/src/QueueList.h" //needs full path because .ino files are sh!t
-#include "/home/nik/Desktop/progetti/nik-lidar/src/buffer.h"  //needs full path because .ino files are sh!t
 
 #define STEP1 32
 #define DIR1 33
@@ -13,7 +14,7 @@
 #define CW 0
 #define CCW 1
 #define SIZE_OF_SCAN_BUFFER 1024
-#define MAX_POS 1600
+#define MAX_POS 4000 // 1600 * 2.5
 #define BUF_SIZE 1800
 
 PCF8574 pcf8574(0x38);
@@ -21,10 +22,6 @@ WiFiServer wifiServer(80);
 YDLidar lidar;
 QueueList<scanPoint> scans;
 buffer<uint8_t> buf(BUF_SIZE);
-
-const char* ssid = "wifi";
-const char* password = "pass";
-const char* hostname = "esp32";
 
 bool isScanning = false;   
 
@@ -129,7 +126,6 @@ void setup() {
 }
 
 void loop(){
-
     WiFiClient client = wifiServer.available();
     if (client) {
         int prev = 0;
@@ -157,19 +153,9 @@ void loop(){
                         buf.append((uint8_t)(((uint16_t)(pos)) >> 8));
                         buf.append((uint8_t)(((uint16_t)(pos)) & 0xFF));
                         
-                        /*Serial.print(pos/8.88888888, 2);
-                        Serial.print(" ");
-                        Serial.print(angle, 2);
-                        Serial.print(" ");
-                        Serial.println(distance);*/
-                        //Serial.println(String(angle) + " " + String(distance) + " " + String(pos/8.88888888));
-                    }
-
-                    //Serial.println(buf.size);
-
-                    if(distance > 0){
                         samples++;
                     }
+
                     if(prev-angle > 300){
                         int t = millis() - time;
                         time = millis();

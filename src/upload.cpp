@@ -6,9 +6,9 @@
 #include <ArduinoOTA.h>
 
 /* fill your ssid and password here */
-const char* ssid = "Vodafone-A48216342";
-const char* password = "12344321";
-const char* hostname = "esp32";
+//const char* ssid = "Vodafone-A48216342";
+//const char* password = "12344321";
+//const char* hostname = "esp32";
 
 TaskHandle_t Task1;
 

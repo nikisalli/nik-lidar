@@ -4,13 +4,13 @@ import numpy as np
 import copy
 
 sock = socket.socket()
-sock.connect(('esp32', 80))
+sock.connect(('esp32', 80)) # lidar hostname or local ip address
 
 head = [0xFF,0xFE,0xFD,0xFC,0xFB,0xFA,0xF9,0xF8,0x0F7,0xF6]
 buf_size = 1800
 meas_length = 6
 
-f = open("/home/nik/kek.xyz", "w")
+f = open("./file.xyz", "w") # path for the output point cloud file (~100MB for each full scan)
 percent = 0
 
 while(1):
@@ -24,13 +24,13 @@ while(1):
         else:
             i = 0
     buf = sock.recv(buf_size, socket.MSG_WAITALL)
-    #print(''.join('{:02x} '.format(x) for x in buf))
-    #print("freq: " + str(1/(time.time() - t)))
-    print("scan advancement: " + str(percent) + "%")
+
+    print("scan advancement: " + str(percent) + "%") # print scan advancement
+    
     for i in range(int(buf_size/meas_length)):
         ze = (buf[i*meas_length+1] + (buf[i*meas_length] << 8))/100
         ra = buf[i*meas_length+3] + (buf[i*meas_length+2] << 8)
-        az = (buf[i*meas_length+5] + (buf[i*meas_length+4] << 8))/8.88888888888888
+        az = (buf[i*meas_length+5] + (buf[i*meas_length+4] << 8))/22.22222222222222222
         
         percent = az/1.8
         
@@ -38,6 +38,4 @@ while(1):
         y = ra * np.sin(np.radians(ze)) * np.sin(np.radians(az))
         z = ra * np.cos(np.radians(ze))
         
-        #print(str(x) + " " + str(y) + " " + str(z))
-        #print(str(az) + " " + str(ze) + " " + str(ra))
         f.write(str(x) + " " + str(y) + " " + str(z) + "\n")

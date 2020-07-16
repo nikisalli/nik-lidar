@@ -1,0 +1,8 @@
+#ifndef _CONFIG_H
+#define _CONFIG_H
+
+const char* ssid = "ssid"; //ssid of the wifi network to connect to
+const char* password = "password"; //password
+const char* hostname = "esp32";
+
+#endif

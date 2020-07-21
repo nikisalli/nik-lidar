@@ -1,6 +1,5 @@
-//#include "upload.h"
-#include "queue_list.h" //needs full path because .ino files are sh!t
-#include "lidar_buffer.h"  //needs full path because .ino files are sh!t
+#include "queuelist.h"
+#include "buffer.h"
 #include "config.h"
 #include <WiFi.h>
 #include <PCF8574.h>

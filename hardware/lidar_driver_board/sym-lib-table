@@ -1,0 +1,3 @@
+(sym_lib_table
+  (lib (name esp32_stepper_driver-rescue)(type Legacy)(uri ${KIPRJMOD}/esp32_stepper_driver-rescue.lib)(options "")(descr ""))
+)

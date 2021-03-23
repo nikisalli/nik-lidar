@@ -4,7 +4,7 @@ import numpy as np
 import copy
 
 sock = socket.socket()
-sock.connect(('esp32', 80)) # lidar hostname or local ip address
+sock.connect(('192.168.43.169', 80)) # lidar hostname or local ip address
 
 head = [0xFF,0xFE,0xFD,0xFC,0xFB,0xFA,0xF9,0xF8,0x0F7,0xF6]
 buf_size = 1800

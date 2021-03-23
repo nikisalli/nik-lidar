@@ -9,3 +9,10 @@ In this repo you can find all what's necessary to assemble your own 3d lidar abl
 feel free to contribute since I don't have time to clean up this project
 
 # images and results
+![alt text](https://github.com/nikisalli/nik-lidar/raw/master/images/photo1.jpg)
+![alt text](https://github.com/nikisalli/nik-lidar/raw/master/images/photo2.jpg)
+![alt text](https://github.com/nikisalli/nik-lidar/raw/master/images/photo3.jpg)
+![alt text](https://github.com/nikisalli/nik-lidar/raw/master/images/photo4.jpg)
+![alt text](https://github.com/nikisalli/nik-lidar/raw/master/images/photo5.jpg)
+![alt text](https://github.com/nikisalli/nik-lidar/raw/master/images/photo6.jpg)
+![alt text](https://github.com/nikisalli/nik-lidar/raw/master/images/photo7.jpg)

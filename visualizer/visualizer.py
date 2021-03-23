@@ -2,7 +2,7 @@ import numpy as np
 import open3d.open3d as o3d
 
 if __name__ == "__main__":
-    pcd = o3d.io.read_point_cloud("/home/nik/kek.xyz", format='xyz')
+    pcd = o3d.io.read_point_cloud("/home/nik/Desktop/progetti/nik-lidar/point_cloud.xyz", format='xyz')
     vis = o3d.visualization.Visualizer()
     vis.create_window()
     vis.add_geometry(pcd)

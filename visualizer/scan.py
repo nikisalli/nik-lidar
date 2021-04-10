@@ -73,6 +73,9 @@ def check_port(ip, port):
 
 
 for i in range(255):
+    if i == int(local_ip[3]):
+        print("skipping")
+        continue
     threading.Thread(target=check_port, args=[local_net + str(i), port]).start()
     if(not found):
         time.sleep(0.05)

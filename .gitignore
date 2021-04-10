@@ -5,5 +5,5 @@
 !.vscode/extensions.json
 build
 src/config.h
-file.xyz
+*.xyz
 point_cloud.xyz

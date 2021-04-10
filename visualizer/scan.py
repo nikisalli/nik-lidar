@@ -32,7 +32,6 @@ def start_scan(sck):
     percent = 0
     f = 0
     t = time.time()
-    good = False
 
     while(1):
         i = 0
@@ -43,7 +42,7 @@ def start_scan(sck):
                 i = i+1
             else:
                 i = 0
-            if(time.time() - t > 5 and good is False):
+            if(time.time() - t > 5 and opened is False):
                 print("connection failed...")
                 return
 
@@ -54,7 +53,7 @@ def start_scan(sck):
         if not opened:
             global found
             found = True
-            good = True
+            opened = True
             f = open(f"{datetime.today().strftime('%Y-%m-%d')}.xyz", "w")  # path for the output point cloud file
 
         for i in range(int(buf_size/meas_length)):

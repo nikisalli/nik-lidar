@@ -27,9 +27,12 @@ main_socket = 0
 
 
 def start_scan(sck):
-    print("starting scan")
-    f = open(f"{datetime.today().strftime('%Y-%m-%d')}.xyz", "w")  # path for the output point cloud file (~100MB for each full scan)
+    print("trying to connect...")
+    opened = False
     percent = 0
+    f = 0
+    t = time.time()
+    good = False
 
     while(1):
         i = 0
@@ -40,9 +43,19 @@ def start_scan(sck):
                 i = i+1
             else:
                 i = 0
+            if(time.time() - t > 5 and good is False):
+                print("connection failed...")
+                return
+
         buf = sck.recv(buf_size, socket.MSG_WAITALL)
 
         print("scan advancement: " + str(percent) + "%")  # print scan advancement
+
+        if not opened:
+            global found
+            found = True
+            good = True
+            f = open(f"{datetime.today().strftime('%Y-%m-%d')}.xyz", "w")  # path for the output point cloud file
 
         for i in range(int(buf_size/meas_length)):
             ze = (buf[i*meas_length+1] + (buf[i*meas_length] << 8))/100
@@ -64,10 +77,7 @@ def check_port(ip, port):
     try:
         sock = socket.socket()  # TCP
         sock.connect((ip, port))
-        global main_socket
-        main_socket = sock
-        found = True
-        print("lidar found at " + ip)
+        start_scan(sock)
     except Exception:
         pass
 
@@ -79,8 +89,6 @@ for i in range(255):
     threading.Thread(target=check_port, args=[local_net + str(i), port]).start()
     if(not found):
         time.sleep(0.05)
-    else:
-        start_scan(main_socket)
 
 
 def validate_ip(s):
@@ -96,8 +104,7 @@ def validate_ip(s):
     return True
 
 
-while threading.active_count() > 0:
-    print(f"waiting for {threading.active_count()} threads to finish...")
+while threading.active_count() > 1:
     time.sleep(0.5)
 
 print("auto scan failed.")

@@ -17,7 +17,7 @@ hostname = socket.gethostname()
 local_ip = socket.gethostbyname(hostname).split(".")
 local_net = f"{local_ip[0]}.{local_ip[1]}.{local_ip[2]}."
 
-print(f"local network address: {local_ip}")
+print(f"local network address: {socket.gethostbyname(hostname)}")
 
 print("searching for lidar ...")
 
@@ -82,15 +82,6 @@ def check_port(ip, port):
         pass
 
 
-for i in range(255):
-    if i == str(local_ip[3]):
-        print("skipping")
-        continue
-    threading.Thread(target=check_port, args=[local_net + str(i), port]).start()
-    if(not found):
-        time.sleep(0.05)
-
-
 def validate_ip(s):
     a = s.split('.')
     if len(a) != 4:
@@ -104,19 +95,29 @@ def validate_ip(s):
     return True
 
 
-while threading.active_count() > 1:
-    time.sleep(0.5)
+mode = input("auto mode? y/n: ")
+if mode.lower() == 'y':
+    for i in range(255):
+        if i == str(local_ip[3]):
+            print("skipping")
+            continue
+        threading.Thread(target=check_port, args=[local_net + str(i), port]).start()
+        if(not found):
+            time.sleep(0.05)
 
-print("auto scan failed.")
-while(True):
-    ip = input("insert IP: ")
-    if validate_ip(ip):
-        try:
-            sock = socket.socket()
-            sock.connect((ip, port))
-            found = True
-            print("lidar found at " + ip)
-            start_scan(sock)
-        except Exception:
-            print("cannot connect to lidar on this ip! check if it is connected on the network")
-            break
+    while threading.active_count() > 1:
+        time.sleep(0.5)
+    print("auto scan failed.")
+else:
+    while(True):
+        ip = input("insert IP: ")
+        if validate_ip(ip):
+            try:
+                sock = socket.socket()
+                sock.connect((ip, port))
+                found = True
+                print("lidar found at " + ip)
+                start_scan(sock)
+            except Exception:
+                print("cannot connect to lidar on this ip! check if it is connected on the network")
+                break

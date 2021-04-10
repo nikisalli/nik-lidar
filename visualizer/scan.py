@@ -95,6 +95,7 @@ def validate_ip(s):
             return False
     return True
 
+
 while threading.active_count() > 0:
     print(f"waiting for {threading.active_count()} threads to finish...")
     time.sleep(0.5)

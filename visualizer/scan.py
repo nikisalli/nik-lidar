@@ -73,7 +73,7 @@ def check_port(ip, port):
 
 
 for i in range(255):
-    if i == int(local_ip[3]):
+    if i == str(local_ip[3]):
         print("skipping")
         continue
     threading.Thread(target=check_port, args=[local_net + str(i), port]).start()
@@ -81,3 +81,34 @@ for i in range(255):
         time.sleep(0.05)
     else:
         start_scan(main_socket)
+
+
+def validate_ip(s):
+    a = s.split('.')
+    if len(a) != 4:
+        return False
+    for x in a:
+        if not x.isdigit():
+            return False
+        i = int(x)
+        if i < 0 or i > 255:
+            return False
+    return True
+
+while threading.active_count() > 0:
+    print(f"waiting for {threading.active_count()} threads to finish...")
+    time.sleep(0.5)
+
+print("auto scan failed.")
+while(True):
+    ip = input("insert IP: ")
+    if validate_ip(ip):
+        try:
+            sock = socket.socket()
+            sock.connect((ip, port))
+            found = True
+            print("lidar found at " + ip)
+            start_scan(sock)
+        except Exception:
+            print("cannot connect to lidar on this ip! check if it is connected on the network")
+            break
